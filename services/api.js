@@ -11,6 +11,9 @@ export const gamesAPI = {
     getGame(id) {
         return instance.get(`games/${id}`, {params:{key: '8ecc3d64c2dd49f6960786aa9d6d2c70'}})
     },
+    getScreenshots(id) {
+        return instance.get(`games/${id}/screenshots`, {params:{key: '8ecc3d64c2dd49f6960786aa9d6d2c70'}})
+    },
     getDataFromUrl(url) {
         return axios.get(url);
     },

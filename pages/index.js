@@ -1,13 +1,11 @@
 import {gamesAPI} from "../services/api";
-import {useQueryParam, StringParam, withDefault, NumberParam} from 'next-query-params';
-import Link from "next/link";
 import {useEffect, useState} from "react";
-import InfiniteScrollComponent from "../components/InfiniteScroll";
 import GameCard from "../components/GameCard";
 import styled from "styled-components";
 import PaginationButtons from "../components/paginationButtons";
 import SearchOptions from "../components/SearchOptions";
 import SearchBar from "../components/SearchBar";
+import {useQueryParam, StringParam, withDefault} from 'next-query-params';
 
 const GridWrapper = styled.div`
   display: grid;
@@ -32,21 +30,9 @@ const SearchOptionsWrapper = styled.div`
   flex-wrap: wrap;
 `
 
-export async function getStaticProps({url}) {
-    const response = await gamesAPI.getGames();
-    const games = await response.data;
-    return {
-        props: {
-            initialGames: games,
-        }
-    }
-}
+export default function Home() {
 
-
-export default function Home({initialGames, url}) {
-    console.log(url);
-
-    const [games, setGames] = useState(initialGames);
+    const [games, setGames] = useState(null);
     // const [page, setPage] = useQueryParam('page', withDefault(NumberParam, 1));
 
     useEffect(() => {
@@ -58,8 +44,8 @@ export default function Home({initialGames, url}) {
     }, []);
 
     //search options
-    const [searchText, setSearchText] = useState('');
-    // const [searchText, setSearchText] = useQueryParam('search', withDefault(StringParam, ''));
+    // const [searchText, setSearchText] = useState('');
+    const [searchText, setSearchText] = useQueryParam('search', withDefault(StringParam, ''));
     const onChangeSearchTextHandler = (event) => {
         setSearchText(event.currentTarget.value);
     };
@@ -70,11 +56,25 @@ export default function Home({initialGames, url}) {
 
     const onChangePlatformHandler = (event) => {
         setPlatform(event.currentTarget.value);
+        setGames(null);
+        const params = createParamsObj(searchText, sort, platform);
+        gamesAPI.getGames(params).then(
+            response => {
+                setGames(response.data);
+            }
+        )
 
 
     }
     const onChangeSortHandler = (event) => {
         setSort(event.currentTarget.value);
+        setGames(null);
+        const params = createParamsObj(searchText, sort, platform);
+        gamesAPI.getGames(params).then(
+            response => {
+                setGames(response.data);
+            }
+        )
     }
 
     const createParamsObj = (search, ordering, platform) => {
@@ -95,7 +95,7 @@ export default function Home({initialGames, url}) {
 
     const searchOnClickHandler = () => {
         const params = createParamsObj(searchText, sort, platform);
-        console.log(params);
+        setGames(null);
         gamesAPI.getGames(params).then(
             response => {
                 setGames(response.data);
@@ -104,19 +104,19 @@ export default function Home({initialGames, url}) {
     }
 
     const nextPage = () => {
+        setGames(null);
         gamesAPI.getDataFromUrl(games.next).then(
             response => {
                 setGames(response.data);
-                setPage(prev => ++prev);
             }
         )
     }
 
     const prevPage = () => {
+        setGames(null);
         gamesAPI.getDataFromUrl(games.previous).then(
             response => {
                 setGames(response.data);
-                setPage(prev => --prev)
             }
         )
     }
@@ -136,11 +136,13 @@ export default function Home({initialGames, url}) {
             name: 'APPLE'
         },
         {
-            value: '187,18,16,15,27',
+            value: '187',
+            // value: '187,18,16,15,27',
             name: 'PS'
         },
         {
-            value: '1,186,14,80',
+            // value: '1,186,14,80',
+            value: '186',
             name: 'XBOX'
         },
     ];
@@ -174,7 +176,7 @@ export default function Home({initialGames, url}) {
                     onChangeHandler={onChangePlatformHandler}
                 />
                 <SearchOptions
-                    name={'ordering'} s
+                    name={'ordering'}
                     value={sort}
                     items={sortData}
                     onChangeHandler={onChangeSortHandler}
@@ -186,7 +188,7 @@ export default function Home({initialGames, url}) {
                 />
             </SearchOptionsWrapper>
             <GridWrapper>
-                {games.results.map(({released, name, rating, background_image, id}, index) => {
+                { games ? games.results.map(({released, name, rating, background_image, id}, index) => {
                     return (<GameCard
                         key={id}
                         name={name}
@@ -195,15 +197,15 @@ export default function Home({initialGames, url}) {
                         image={background_image}
                         link={`/${id}`}
                     />)
-                })}
+                }) : <h2>Loading...</h2>}
 
             </GridWrapper>
-            <PaginationButtons
+        {games && <PaginationButtons
                 disabledNext={!games.next}
                 disabledPrev={!games.previous}
                 nextHandler={nextPage}
                 prevHandler={prevPage}
-            />
+            />}
         </AppWrapper>
     )
 }
