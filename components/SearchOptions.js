@@ -25,9 +25,9 @@ const Option = styled.option`
 const SearchOptions = ({onChangeHandler, value, name, items}) => {
     return (
         <div>
-            <Select onChange={onChangeHandler} value={value} name={name} id={name}>
+            <Select onChange={onChangeHandler}  value={value} name={name} id={name}>
                 {items.map(({name, value}, index) => {
-                    return (<Option key={index} value={value}>
+                    return (<Option onClick={(e) => { console.log(e.currentTarget.value)}} key={index} value={value}>
                         {name}
                     </Option>)
                 })}

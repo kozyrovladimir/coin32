@@ -5,7 +5,10 @@ import styled from "styled-components";
 import PaginationButtons from "../components/paginationButtons";
 import SearchOptions from "../components/SearchOptions";
 import SearchBar from "../components/SearchBar";
-import {useQueryParam, StringParam, withDefault} from 'next-query-params';
+import {useQueryParam, StringParam, withDefault, NumberParam} from 'next-query-params';
+import {platformsData, sortData} from "../constants/filtrsData";
+import MenuList from "../components/MenuList";
+import { useRouter } from 'next/router';
 
 const GridWrapper = styled.div`
   display: grid;
@@ -30,18 +33,37 @@ const SearchOptionsWrapper = styled.div`
   flex-wrap: wrap;
 `
 
+// export async function getServerSideProps(context) {
+//     const query = context.query;
+//
+//     return {
+//         props: {
+//             query: query
+//         }
+//     }
+// }
+// {query}
+
 export default function Home() {
 
     const [games, setGames] = useState(null);
-    // const [page, setPage] = useQueryParam('page', withDefault(NumberParam, 1));
+
+    const router = useRouter();
+    // const {search, platform, sort, page} = router.query;
+
+    // console.log(page);
 
     useEffect(() => {
-        gamesAPI.getGames(createParamsObj(searchText, sort, platform)).then(
+        gamesAPI.getGames().then(
             response => {
                 setGames(response.data);
             }
         )
     }, []);
+
+    const [pageCount, setPageCount] = useQueryParam('page', withDefault(NumberParam, 1));
+
+    // console.log(typeof pageCount);
 
     //search options
     // const [searchText, setSearchText] = useState('');
@@ -49,16 +71,19 @@ export default function Home() {
     const onChangeSearchTextHandler = (event) => {
         setSearchText(event.currentTarget.value);
     };
-    const [platform, setPlatform] = useState('');
-    // const [platform, setPlatform] = useQueryParam('platform', withDefault(NumberParam, 1));
-    const [sort, setSort] = useState('-rating');
-    // const [sort, setSort] = useQueryParam('sort', withDefault(StringParam, ''));
+    // const [platformState, setPlatformState] = useState('');
+    const [platformState, setPlatformState] = useQueryParam('platform', withDefault(StringParam,   platformsData[0].value));
+    // const [sortState, setSortState] = useState('-rating');
+    const [sortState, setSortState] = useQueryParam('sort', withDefault(StringParam, sortData[1].value));
+
+    // console.log(sortState);
 
     const onChangePlatformHandler = (event) => {
-        setPlatform(event.currentTarget.value);
+        setPlatformState(event.currentTarget.value);
         setGames(null);
-        const params = createParamsObj(searchText, sort, platform);
-        gamesAPI.getGames(params).then(
+        // setPageCount(1);
+        const params = createParamsObj(searchText, sortState, event.currentTarget.value);
+        gamesAPI.getGames({...params, page: 1}).then(
             response => {
                 setGames(response.data);
             }
@@ -67,10 +92,11 @@ export default function Home() {
 
     }
     const onChangeSortHandler = (event) => {
-        setSort(event.currentTarget.value);
+        setSortState(event.currentTarget.value);
         setGames(null);
-        const params = createParamsObj(searchText, sort, platform);
-        gamesAPI.getGames(params).then(
+        // setPageCount(1);
+        const params = createParamsObj(searchText, event.currentTarget.value, platformState);
+        gamesAPI.getGames({...params, page: 1}).then(
             response => {
                 setGames(response.data);
             }
@@ -87,16 +113,17 @@ export default function Home() {
         params.ordering = ordering;
 
         if (platform !== '') {
-            params.platform = platform;
+            params.platforms = platform;
         }
 
         return params;
     }
 
     const searchOnClickHandler = () => {
-        const params = createParamsObj(searchText, sort, platform);
+        // setPageCount(1);
+        const params = createParamsObj(searchText, sortState, platformState);
         setGames(null);
-        gamesAPI.getGames(params).then(
+        gamesAPI.getGames({...params, page: 1}).then(
             response => {
                 setGames(response.data);
             }
@@ -105,6 +132,7 @@ export default function Home() {
 
     const nextPage = () => {
         setGames(null);
+        setPageCount(prevState => prevState + 1);
         gamesAPI.getDataFromUrl(games.next).then(
             response => {
                 setGames(response.data);
@@ -114,6 +142,7 @@ export default function Home() {
 
     const prevPage = () => {
         setGames(null);
+        setPageCount(prevState => prevState + 1);
         gamesAPI.getDataFromUrl(games.previous).then(
             response => {
                 setGames(response.data);
@@ -121,65 +150,18 @@ export default function Home() {
         )
     }
 
-    //data for platforms
-    const platformsData = [
-        {
-            value: '',
-            name: 'ALL'
-        },
-        {
-            value: '4',
-            name: 'PC'
-        },
-        {
-            value: '5',
-            name: 'APPLE'
-        },
-        {
-            value: '187',
-            // value: '187,18,16,15,27',
-            name: 'PS'
-        },
-        {
-            // value: '1,186,14,80',
-            value: '186',
-            name: 'XBOX'
-        },
-    ];
-
-    //data for sort
-    const sortData = [
-        {
-            value: '-rating',
-            name: '-Rating'
-        },
-        {
-            value: 'rating',
-            name: 'Rating'
-        },
-        {
-            value: '-released',
-            name: 'Newest'
-        },
-        {
-            value: 'released',
-            name: 'Oldest'
-        },
-    ];
-
     return (<AppWrapper>
             <SearchOptionsWrapper>
-                <SearchOptions
-                    name={'platforms'}
-                    value={platform}
-                    items={platformsData}
-                    onChangeHandler={onChangePlatformHandler}
-                />
-                <SearchOptions
-                    name={'ordering'}
-                    value={sort}
+                <MenuList
+                    value={sortState}
                     items={sortData}
-                    onChangeHandler={onChangeSortHandler}
+                    menuItemOnClickHandler={onChangeSortHandler}
+                />
+
+                <MenuList
+                    value={platformState}
+                    items={platformsData}
+                    menuItemOnClickHandler={onChangePlatformHandler}
                 />
                 <SearchBar
                     onChangeHandler={onChangeSearchTextHandler}
