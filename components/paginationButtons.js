@@ -29,8 +29,8 @@ const PaginationButtonsWrapper = styled.div`
 const PaginationButtons = ({disabledNext, disabledPrev ,nextHandler, prevHandler}) => {
     return (
         <PaginationButtonsWrapper>
-            <Button disabled={disabledNext} onClick={nextHandler}>Next page</Button>
             <Button disabled={disabledPrev} onClick={prevHandler}>Previous page</Button>
+            <Button disabled={disabledNext} onClick={nextHandler}>Next page</Button>
         </PaginationButtonsWrapper>
     );
 };

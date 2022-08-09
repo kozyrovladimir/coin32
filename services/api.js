@@ -6,7 +6,8 @@ const instance = axios.create({
 
 export const gamesAPI = {
     getGames(params) {
-        return instance.get('games', {params:{key: '8ecc3d64c2dd49f6960786aa9d6d2c70', page_size: 12, ...params}})
+        // console.log(params);
+        return instance.get('games', {params:{key: '8ecc3d64c2dd49f6960786aa9d6d2c70', page: 1, page_size: 12, ...params}})
     },
     getGame(id) {
         return instance.get(`games/${id}`, {params:{key: '8ecc3d64c2dd49f6960786aa9d6d2c70'}})

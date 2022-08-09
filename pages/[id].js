@@ -94,8 +94,11 @@ const Flex = styled.div`
 
 export async function getServerSideProps(context) {
     const {id} = context.params;
-    const game = await (await gamesAPI.getGame(id)).data;
-    const screenshots = await (await gamesAPI.getScreenshots(id)).data;
+    const gameResponse = await gamesAPI.getGame(id);
+    const game = gameResponse.data;
+    const screenshotsResponse = await gamesAPI.getScreenshots(id);
+    const screenshots = screenshotsResponse.data;
+
     if (!game) {
         return {
             notFound: true

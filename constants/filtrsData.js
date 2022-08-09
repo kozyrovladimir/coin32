@@ -2,7 +2,7 @@
 export const platformsData = [
     {
         value: '',
-        name: 'ALL'
+        name: 'All'
     },
     {
         value: '4',
@@ -10,20 +10,17 @@ export const platformsData = [
     },
     {
         value: '5',
-        name: 'APPLE'
+        name: 'MacOS'
     },
     {
-        value: '187',
-        // value: '187,18,16,15,27',
-        name: 'PS'
+        value: '187,18,16,15,27',
+        name: 'PlayStation'
     },
     {
-        // value: '1,186,14,80',
-        value: '186',
-        name: 'XBOX'
+        value: '1,186,14,80',
+        name: 'Xbox'
     },
     {
-        // value: '1,186,14,80',
         value: '7',
         name: 'Nintendo Switch'
     },
@@ -33,11 +30,11 @@ export const platformsData = [
 export const sortData = [
     {
         value: '-rating',
-        name: '-Rating'
+        name: "Highest rating"
     },
     {
         value: 'rating',
-        name: 'Rating'
+        name: 'Lowest rating'
     },
     {
         value: '-released',
