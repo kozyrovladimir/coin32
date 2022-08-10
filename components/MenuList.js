@@ -32,6 +32,10 @@ const MainButton = styled.button`
   &:active {
     color: white;
   }
+
+  :disabled {
+    background-color: #c9c9c9;
+  }
 `
 
 const MenuButton = styled.button`

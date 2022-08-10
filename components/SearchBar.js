@@ -55,6 +55,10 @@ const SearchButton = styled.button`
   &:active {
     color: white;
   }
+
+  :disabled {
+    background-color: #c9c9c9;
+  }
 `
 
 const SearchBar = ({value, onChangeHandler, onClickHandler}) => {
