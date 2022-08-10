@@ -9,6 +9,8 @@ import {platformsData, sortData} from "../constants/filtrsData"
 import MenuList from "../components/MenuList"
 import {createParamsObj} from "../utils/createParams"
 import LoaderOfPage from "../components/LoaderOfPage"
+import Footer from "../components/Footer";
+import Header from "../components/Header";
 
 const GridWrapper = styled.div`
   min-height: 76vh;

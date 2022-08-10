@@ -14,6 +14,8 @@ const GamePageWrapper = styled.div`
 `
 
 const ContentWrapper = styled.div`
+  padding-right: 20px;
+  padding-left: 20px;
   max-width: 1100px;
   margin: 0 auto;
 `
