@@ -25,11 +25,11 @@ const Button = styled.button`
     background-color: #626262;
   }
   
-  :active {
+  &:active {
     background-color: #545454;
   }
   
-  :disabled {
+  &:disabled {
     background-color: #c9c9c9;
   }
 `
