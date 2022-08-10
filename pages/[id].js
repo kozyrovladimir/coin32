@@ -1,6 +1,7 @@
 import React from 'react';
 import {gamesAPI} from "../services/api";
 import styled from "styled-components";
+import PhotoSlider from "../components/PhotoSlider";
 
 const GamePageWrapper = styled.div`
   width: 100%;
@@ -26,9 +27,16 @@ const GameDarkBackground = styled.div`
 
 const MainInfoWrapper = styled.div`
   min-height: 50vh;
-  width: 50%;
+  width: 40%;
   display: flex;
   justify-content: space-between;
+  @media (max-width: 768px) {
+    width: 100%;
+  }
+`
+
+const PhotoSliderWrapper = styled.div`
+  width: 60%;
   @media (max-width: 768px) {
     width: 100%;
   }
@@ -145,11 +153,14 @@ const Game = ({game, screenshots}) => {
                                 </SubInfoWrapper>
                             </MainInfo>
                         </MainInfoWrapper>
-                        <ScreenshotsWrapper>
-                            {ShortlistOfScreenshots.map(({image}, index) => {
-                                return (<ScreenShot key={index} imagePath={image} ></ScreenShot>);
-                            })}
-                        </ScreenshotsWrapper>
+                        {/*<ScreenshotsWrapper>*/}
+                        {/*    {ShortlistOfScreenshots.map(({image}, index) => {*/}
+                        {/*        return (<ScreenShot key={index} imagePath={image} ></ScreenShot>);*/}
+                        {/*    })}*/}
+                        {/*</ScreenshotsWrapper>*/}
+                        <PhotoSliderWrapper>
+                            <PhotoSlider images={listOfScreenshots}/>
+                        </PhotoSliderWrapper>
                     </Flex>
                     <GameDescription>
                         {game.description_raw}
