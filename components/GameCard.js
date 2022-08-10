@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from "styled-components";
 import Link from "next/link";
+import GameRating from "./GameRating";
 
 const GameCardWrapper = styled.div`
   overflow: hidden;
@@ -23,13 +24,6 @@ const GameCardHeader = styled.div`
   padding: 8px;
   background-color: rgba(3, 3, 3, 0.60);
   backdrop-filter: blur(10px);
-`
-
-const GameCardRating = styled.div`
-  color: ${props => props.ratingColor};
-  padding: 4px;
-  border-radius: 8px;
-  border: 2px solid ${props => props.ratingColor};
 `
 
 const GameCardInformation = styled.div`
@@ -59,29 +53,13 @@ const GameDate = styled.div`
 `
 
 const GameCard = ({image, name, rating, released, link}) => {
-    const defineRatingColor = (rating) => {
-        if (rating >= 4) {
-            return '#6ac248';
-        }
-
-        if (rating >= 2) {
-            return '#ffd560';
-        }
-
-        return '#fa1001';
-    }
-
-    const ratingColor = defineRatingColor(rating);
-
     return (
         <Link href={link}>
             <GameCardWrapper
                 imagePath={image}
             >
                 <GameCardHeader>
-                    <GameCardRating ratingColor={ratingColor}>
-                        <span>Rating: {rating}</span>
-                    </GameCardRating>
+                    <GameRating rating={rating}/>
                 </GameCardHeader>
                 <GameCardInformation>
                     <GameCardName>
