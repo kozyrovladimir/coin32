@@ -11,6 +11,7 @@ import {createParamsObj} from "../utils/createParams";
 import LoaderOfPage from "../components/LoaderOfPage";
 
 const GridWrapper = styled.div`
+  min-height: 76vh;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-column-gap: 20px;
@@ -151,6 +152,7 @@ export default function Home({games}) {
     return (<AppWrapper>
             <SearchOptionsWrapper>
                 <MenuList
+                    disabled={!localGames}
                     value={sortState}
                     items={sortData}
                     menuItemOnClickHandler={onChangeSortHandler}
@@ -158,19 +160,21 @@ export default function Home({games}) {
                 />
 
                 <MenuList
+                    disabled={!localGames}
                     value={platformState}
                     items={platformsData}
                     menuItemOnClickHandler={onChangePlatformHandler}
                     helpText={'Platform:'}
                 />
                 <SearchBar
+                    disabled={!localGames}
                     onChangeHandler={onChangeSearchTextHandler}
                     value={searchText}
                     onClickHandler={searchOnClickHandler}
                 />
             </SearchOptionsWrapper>
             {localGames ? <GridWrapper>
-                {localGames.results.map(({released, name, rating, background_image, id}, index) => {
+                {localGames.results.map(({released, name, rating, background_image, id}) => {
                     return (<GameCard
                         key={id}
                         name={name}
@@ -181,7 +185,7 @@ export default function Home({games}) {
                     />)
                 })} </GridWrapper> : <LoaderOfPage/>}
 
-            {localGames && <Pagination
+            { localGames && <Pagination
                 disabledNext={!localGames.next}
                 disabledPrev={!localGames.previous}
                 pageCount={pageCount}

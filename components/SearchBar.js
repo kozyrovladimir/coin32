@@ -64,7 +64,7 @@ const SearchButton = styled.button`
   }
 `
 
-const SearchBar = ({value, onChangeHandler, onClickHandler}) => {
+const SearchBar = ({value, onChangeHandler, onClickHandler, disabled}) => {
     const [focus, setFocus] = useState(false);
     const onFocusHandler = () => {
         setFocus(true);
@@ -82,9 +82,9 @@ const SearchBar = ({value, onChangeHandler, onClickHandler}) => {
         <SearchWrapper>
             <SearchInputWrapper focus={focus}>
                 <BiSearch color={'white'} style={{height: '100%', width: '1.5rem'}}/>
-                <SearchInput onKeyPress={onKeyPressEnter} onFocus={onFocusHandler} onBlur={onBlurHandler} value={value} onChange={onChangeHandler} type="text"/>
+                <SearchInput disabled={disabled} onKeyPress={onKeyPressEnter} onFocus={onFocusHandler} onBlur={onBlurHandler} value={value} onChange={onChangeHandler} type="text"/>
             </SearchInputWrapper>
-            <SearchButton onClick={onClickHandler}>
+            <SearchButton disabled={disabled} onClick={onClickHandler}>
                 Search
             </SearchButton>
         </SearchWrapper>

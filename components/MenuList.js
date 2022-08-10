@@ -63,7 +63,7 @@ const AriaHidden = styled.div`
   right: 0;
 `
 
-const MenuList = ({value, items, menuItemOnClickHandler, helpText}) => {
+const MenuList = ({value, items, menuItemOnClickHandler, helpText, disabled}) => {
     const [hide, setHide] = useState(true);
     const onClickHandler = () => {
         setHide(prevState => !prevState);
@@ -73,11 +73,11 @@ const MenuList = ({value, items, menuItemOnClickHandler, helpText}) => {
 
     return (
         <MenuWrapper>
-            <MainButton onClick={onClickHandler}>{helpText} {buttonName}</MainButton>
+            <MainButton disabled={disabled} onClick={onClickHandler}>{helpText} {buttonName}</MainButton>
             <AriaHidden hide={hide} onClick={onClickHandler}/>
             <MenuItems hide={hide}>
                     {items.map(({name, value}, index) => {
-                        return (<MenuButton onClick={(e) => {menuItemOnClickHandler(e); setHide(true)}} key={index} value={value}>
+                        return (<MenuButton disabled={disabled} onClick={(e) => {menuItemOnClickHandler(e); setHide(true)}} key={index} value={value}>
                             {name}
                         </MenuButton>)
                     })}

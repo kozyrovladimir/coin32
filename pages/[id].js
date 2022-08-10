@@ -11,6 +11,11 @@ const GamePageWrapper = styled.div`
   min-height: 100vh;
 `
 
+const ContentWrapper = styled.div`
+  max-width: 1100px;
+  margin: 0 auto;
+`
+
 const GameDarkBackground = styled.div`
   padding: 20px;
   width: 100%;
@@ -128,26 +133,28 @@ const Game = ({game, screenshots}) => {
     return (
         <GamePageWrapper imagePath={image}>
             <GameDarkBackground>
-                <Flex>
-                    <MainInfoWrapper>
-                        <MainInfo>
-                            <div><GameName>{name}</GameName></div>
-                            <SubInfoWrapper>
-                                <SubInfo>Rating {rating}</SubInfo>
-                                <SubInfo>Released: {released}</SubInfo>
-                                <Link href={website}>Website</Link>
-                            </SubInfoWrapper>
-                        </MainInfo>
-                    </MainInfoWrapper>
-                    <ScreenshotsWrapper>
-                        {ShortlistOfScreenshots.map(({image}, index) => {
-                            return (<ScreenShot key={index} imagePath={image} ></ScreenShot>);
-                        })}
-                    </ScreenshotsWrapper>
-                </Flex>
-                <GameDescription>
-                    {game.description_raw}
-                </GameDescription>
+                <ContentWrapper>
+                    <Flex>
+                        <MainInfoWrapper>
+                            <MainInfo>
+                                <div><GameName>{name}</GameName></div>
+                                <SubInfoWrapper>
+                                    <SubInfo>Rating {rating}</SubInfo>
+                                    <SubInfo>Released: {released}</SubInfo>
+                                    <Link href={website}>Website</Link>
+                                </SubInfoWrapper>
+                            </MainInfo>
+                        </MainInfoWrapper>
+                        <ScreenshotsWrapper>
+                            {ShortlistOfScreenshots.map(({image}, index) => {
+                                return (<ScreenShot key={index} imagePath={image} ></ScreenShot>);
+                            })}
+                        </ScreenshotsWrapper>
+                    </Flex>
+                    <GameDescription>
+                        {game.description_raw}
+                    </GameDescription>
+                </ContentWrapper>
             </GameDarkBackground>
         </GamePageWrapper>
     );
