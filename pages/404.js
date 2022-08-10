@@ -1,11 +1,22 @@
 import React from 'react';
 
+const NotFoundWrapper = styled.div`
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+`
+
 const Error = () => {
     return (
-        <>
-            <h1>404</h1>
-            <h2>Something is going wrong...</h2>
-        </>
+        <NotFoundWrapper>
+            <div>
+                <h2>404</h2>
+                <h3>Something is going wrong...</h3>
+            </div>
+        </NotFoundWrapper>
     );
 };
 

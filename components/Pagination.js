@@ -12,8 +12,8 @@ const PaginationButtonsWrapper = styled.div`
 
 const Button = styled.button`
   display: block;
-  margin: 8px;
-  padding: 8px 8px 6px;
+  margin: 18px;
+  padding: 14px 14px 12px;
   border: none;
   border-radius: 8px;
   background-color: #262626;
@@ -36,16 +36,17 @@ const Button = styled.button`
 
 const PageCount = styled.span`
   color: white;
+  font-size: 1.2rem;
 `
 
 const Pagination = ({disabledNext, disabledPrev ,nextHandler, prevHandler, firstHandler, lastHandler, pageCount}) => {
     return (
         <PaginationButtonsWrapper>
-            <Button disabled={disabledPrev} onClick={firstHandler}><BiChevronsLeft/></Button>
-            <Button disabled={disabledPrev} onClick={prevHandler}><BiChevronLeft/></Button>
-            <PageCount>Page: {pageCount}</PageCount>
-            <Button disabled={disabledNext} onClick={nextHandler}><BiChevronRight/></Button>
-            <Button disabled={disabledNext} onClick={lastHandler}><BiChevronsRight/></Button>
+            <Button disabled={disabledPrev} onClick={firstHandler}><BiChevronsLeft style={{width: '1.5rem', height: '100%'}}/></Button>
+            <Button disabled={disabledPrev} onClick={prevHandler}><BiChevronLeft style={{width: '1.5rem', height: '100%'}}/></Button>
+            <PageCount>{pageCount}</PageCount>
+            <Button disabled={disabledNext} onClick={nextHandler}><BiChevronRight style={{width: '1.5rem', height: '100%'}}/></Button>
+            <Button disabled={disabledNext} onClick={lastHandler}><BiChevronsRight style={{width: '1.5rem', height: '100%'}}/></Button>
         </PaginationButtonsWrapper>
     );
 };

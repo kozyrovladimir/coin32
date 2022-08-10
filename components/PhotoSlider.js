@@ -42,7 +42,7 @@ const ButtonsWrapper = styled.div`
 const Button = styled.button`
   display: block;
   margin: 8px;
-  padding: 8px 8px 6px;
+  padding: 16px 16px 14px;
   border: none;
   border-radius: 8px;
   background-color: #262626;
@@ -90,8 +90,8 @@ const PhotoSlider = ({images}) => {
             }
 
             <ButtonsWrapper>
-                <Button disabled={!countOfImages} onClick={previousSliderHandler}><BiChevronLeft/></Button>
-                <Button disabled={!countOfImages} onClick={nextSliderHandler}><BiChevronRight/></Button>
+                <Button disabled={!countOfImages} onClick={previousSliderHandler}><BiChevronLeft style={{width: '1.5rem', height: '100%'}}/></Button>
+                <Button disabled={!countOfImages} onClick={nextSliderHandler}><BiChevronRight style={{width: '1.5rem', height: '100%'}}/></Button>
             </ButtonsWrapper>
         </PhotoSliderWrapper>
     );

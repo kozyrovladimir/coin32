@@ -1,7 +1,8 @@
-import React from 'react';
-import {gamesAPI} from "../services/api";
-import styled from "styled-components";
-import PhotoSlider from "../components/PhotoSlider";
+import React from 'react'
+import {gamesAPI} from "../services/api"
+import styled from "styled-components"
+import PhotoSlider from "../components/PhotoSlider"
+import {useRouter} from "next/router"
 
 const GamePageWrapper = styled.div`
   width: 100%;
@@ -25,16 +26,6 @@ const GameDarkBackground = styled.div`
   min-height: 100vh;
 `
 
-const MainInfoWrapper = styled.div`
-  min-height: 50vh;
-  width: 40%;
-  display: flex;
-  justify-content: space-between;
-  @media (max-width: 768px) {
-    width: 100%;
-  }
-`
-
 const PhotoSliderWrapper = styled.div`
   width: 60%;
   @media (max-width: 768px) {
@@ -43,17 +34,20 @@ const PhotoSliderWrapper = styled.div`
 `
 
 const MainInfo = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 20px;
+  height: 100%;
+  width: 40%;
+  padding-right: 10px;
+  margin-bottom: 20px;
+
+  @media (max-width: 768px) {
+    width: 100%;
+  }
 `
 
 const SubInfoWrapper = styled.div`
   width: 100%;
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
 `
 
 const GameName = styled.h2`
@@ -65,6 +59,7 @@ const GameName = styled.h2`
 const SubInfo = styled.span`
   color: white;
   font-weight: bold;
+  padding-bottom: 10px;
 `;
 
 const Link = styled.a`
@@ -76,27 +71,6 @@ const GameDescription = styled.p`
   color: white;
 `
 
-const ScreenshotsWrapper = styled.div`
-  grid-column-gap: 10px;
-  grid-row-gap: 10px;
-  width: 50%;
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  @media (max-width: 768px) {
-    width: 100%;
-  }
-`
-
-const ScreenShot = styled.div`
-  border-radius: 8px;
-  background-image: url("${props => props.imagePath}");
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
-  width: 100%;
-  aspect-ratio: 1/1;
-`
-
 const Flex = styled.div`
   width: 100%;
   display: flex;
@@ -105,11 +79,35 @@ const Flex = styled.div`
   }
 `
 
+const BackButton = styled.button`
+  padding: 14px;
+  border-radius: 8px;
+  border: none;
+  background-color: #262626;
+  color: white;
+  cursor: pointer;
+  font-size: 1.1rem;
+  transition: 200ms;
+  margin-bottom: 30px;
+
+  &:hover {
+    background-color: #626262;
+  }
+
+  &:active {
+    color: white;
+  }
+
+  &:disabled {
+    background-color: #c9c9c9;
+  }
+`
+
 export async function getServerSideProps(context) {
-    const {id} = context.params;
-    const gameResponse = await gamesAPI.getGame(id);
+    const {slug} = context.params;
+    const gameResponse = await gamesAPI.getGame(slug);
     const game = gameResponse.data;
-    const screenshotsResponse = await gamesAPI.getScreenshots(id);
+    const screenshotsResponse = await gamesAPI.getScreenshots(slug);
     const screenshots = screenshotsResponse.data;
 
     if (!game) {
@@ -132,32 +130,26 @@ const Game = ({game, screenshots}) => {
     const website = game.website;
     const rating = game.rating;
     const released = game.released;
-
-    const countOfScreenshots = screenshots.count;
     const listOfScreenshots = screenshots.results;
-    const ShortlistOfScreenshots = screenshots.results.slice(0,4);
 
+    const router = useRouter();
 
     return (
         <GamePageWrapper imagePath={image}>
             <GameDarkBackground>
                 <ContentWrapper>
                     <Flex>
-                        <MainInfoWrapper>
-                            <MainInfo>
-                                <div><GameName>{name}</GameName></div>
-                                <SubInfoWrapper>
-                                    <SubInfo>Rating {rating}</SubInfo>
-                                    <SubInfo>Released: {released}</SubInfo>
-                                    <Link href={website}>Website</Link>
-                                </SubInfoWrapper>
-                            </MainInfo>
-                        </MainInfoWrapper>
-                        {/*<ScreenshotsWrapper>*/}
-                        {/*    {ShortlistOfScreenshots.map(({image}, index) => {*/}
-                        {/*        return (<ScreenShot key={index} imagePath={image} ></ScreenShot>);*/}
-                        {/*    })}*/}
-                        {/*</ScreenshotsWrapper>*/}
+                        <MainInfo>
+                            <BackButton onClick={() => {
+                                router.back()
+                            }}>Back</BackButton>
+                            <div><GameName>{name}</GameName></div>
+                            <SubInfoWrapper>
+                                <SubInfo>Rating: {rating}</SubInfo>
+                                <SubInfo>Released: {released}</SubInfo>
+                                <Link href={website}>Website</Link>
+                            </SubInfoWrapper>
+                        </MainInfo>
                         <PhotoSliderWrapper>
                             <PhotoSlider images={listOfScreenshots}/>
                         </PhotoSliderWrapper>

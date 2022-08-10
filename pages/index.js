@@ -55,7 +55,6 @@ export async function getServerSideProps(context) {
 }
 
 export default function Home({games}) {
-
     const [localGames, setLocalGames] = useState(games);
 
     const [pageCount, setPageCount] = useQueryParam('page', withDefault(NumberParam, 1));
@@ -103,7 +102,7 @@ export default function Home({games}) {
         )
     }
 
-    const nextPage = () => {
+    const nextPageHandler = () => {
         setLocalGames(null);
         setPageCount(prevState => ++prevState);
         gamesAPI.getDataFromUrl(localGames.next).then(
@@ -113,7 +112,7 @@ export default function Home({games}) {
         )
     }
 
-    const prevPage = () => {
+    const prevPageHandler = () => {
         setLocalGames(null);
         setPageCount(prevState => --prevState);
         gamesAPI.getDataFromUrl(localGames.previous).then(
@@ -123,7 +122,7 @@ export default function Home({games}) {
         )
     }
 
-    const firstPage = () => {
+    const firstPageHandler = () => {
         const params = createParamsObj(searchText, sortState, platformState);
         setLocalGames(null);
         gamesAPI.getGames(params).then(
@@ -134,7 +133,7 @@ export default function Home({games}) {
         )
     }
 
-    const lastPage = () => {
+    const lastPageHandler = () => {
         const countOfGamesOnPage = 12;
         const countOfGames = games.count;
         const maxCountPage = Math.ceil(countOfGames / countOfGamesOnPage);
@@ -189,10 +188,10 @@ export default function Home({games}) {
                 disabledNext={!localGames.next}
                 disabledPrev={!localGames.previous}
                 pageCount={pageCount}
-                nextHandler={nextPage}
-                prevHandler={prevPage}
-                firstHandler={firstPage}
-                lastHandler={lastPage}
+                nextHandler={nextPageHandler}
+                prevHandler={prevPageHandler}
+                firstHandler={firstPageHandler}
+                lastHandler={lastPageHandler}
             />}
         </AppWrapper>
     )
