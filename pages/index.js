@@ -2,7 +2,7 @@ import {gamesAPI} from "../services/api";
 import {useState} from "react";
 import GameCard from "../components/GameCard";
 import styled from "styled-components";
-import PaginationButtons from "../components/paginationButtons";
+import Pagination from "../components/Pagination";
 import SearchBar from "../components/SearchBar";
 import {useQueryParam, StringParam, withDefault, NumberParam} from 'next-query-params';
 import {platformsData, sortData} from "../constants/filtrsData";
@@ -94,7 +94,7 @@ export default function Home({games}) {
     const searchOnClickHandler = () => {
         const params = createParamsObj(searchText, sortState, platformState);
         setLocalGames(null);
-        gamesAPI.getGames({...params, page: 1}).then(
+        gamesAPI.getGames(params).then(
             response => {
                 setLocalGames(response.data);
                 setPageCount(1);
@@ -118,6 +118,32 @@ export default function Home({games}) {
         gamesAPI.getDataFromUrl(localGames.previous).then(
             response => {
                 setLocalGames(response.data);
+            }
+        )
+    }
+
+    const firstPage = () => {
+        const params = createParamsObj(searchText, sortState, platformState);
+        setLocalGames(null);
+        gamesAPI.getGames(params).then(
+            response => {
+                setLocalGames(response.data);
+                setPageCount(1);
+            }
+        )
+    }
+
+    const lastPage = () => {
+        const countOfGamesOnPage = 12;
+        const countOfGames = games.count;
+        const maxCountPage = Math.ceil(countOfGames / countOfGamesOnPage);
+
+        const params = createParamsObj(searchText, sortState, platformState, maxCountPage);
+        setLocalGames(null);
+        gamesAPI.getGames(params).then(
+            response => {
+                setLocalGames(response.data);
+                setPageCount(maxCountPage);
             }
         )
     }
@@ -155,11 +181,14 @@ export default function Home({games}) {
                     />)
                 })} </GridWrapper> : <LoaderOfPage/>}
 
-            {localGames && <PaginationButtons
+            {localGames && <Pagination
                 disabledNext={!localGames.next}
                 disabledPrev={!localGames.previous}
+                pageCount={pageCount}
                 nextHandler={nextPage}
                 prevHandler={prevPage}
+                firstHandler={firstPage}
+                lastHandler={lastPage}
             />}
             <span>Page: {pageCount}</span>
         </AppWrapper>
