@@ -17,12 +17,13 @@ const MenuItems = styled.div`
 `
 
 const MainButton = styled.button`
-  padding: 12px 24px;
+  padding: 14px;
   border-radius: 8px;
   border: none;
   background-color: #262626;
   color: white;
   cursor: pointer;
+  font-size: 1.1rem;
   transition: 200ms;
   
   &:hover {
@@ -45,6 +46,8 @@ const MenuButton = styled.button`
   border: none;
   padding: 8px;
   cursor: pointer;
+  font-size: 1.2rem;
+  
   :hover {
     background-color: #c7c7c7;
   }

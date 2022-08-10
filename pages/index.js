@@ -190,7 +190,6 @@ export default function Home({games}) {
                 firstHandler={firstPage}
                 lastHandler={lastPage}
             />}
-            <span>Page: {pageCount}</span>
         </AppWrapper>
     )
 }

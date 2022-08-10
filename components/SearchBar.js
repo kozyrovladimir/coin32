@@ -5,11 +5,13 @@ import {BiSearch} from "react-icons/bi";
 const SearchWrapper = styled.div`
   display: flex;
   flex-shrink: 0;
+  align-items: start;
 `;
 
 const SearchInputWrapper = styled.div`
   display: flex;
-  margin-right: 20px;
+  align-items: center;
+  margin-right: 10px;
   margin-bottom: 20px;
   width: 240px;
   padding: 12px;
@@ -30,6 +32,7 @@ const SearchInput = styled.input`
   border: none;
   width: 100%;
   color: white;
+  font-size: 1.2rem;
 
   &:focus {
     outline: none;
@@ -38,14 +41,14 @@ const SearchInput = styled.input`
 `
 
 const SearchButton = styled.button`
-  height: 2.6rem;
   display: block;
-  padding: 12px;
+  padding: 14px;
   border: none;
   background-color: #262626;
   color: white;
   border-radius: 8px;
   cursor: pointer;
+  font-size: 1.1rem;
   transition: 200ms;
 
   &:hover {
@@ -77,9 +80,8 @@ const SearchBar = ({value, onChangeHandler, onClickHandler}) => {
     }
     return (
         <SearchWrapper>
-            {/*<SearchInput value={value} onChange={onChangeHandler} type={'text'}/>*/}
             <SearchInputWrapper focus={focus}>
-                <BiSearch color={'white'} style={{height: '100%'}}/>
+                <BiSearch color={'white'} style={{height: '100%', width: '1.5rem'}}/>
                 <SearchInput onKeyPress={onKeyPressEnter} onFocus={onFocusHandler} onBlur={onBlurHandler} value={value} onChange={onChangeHandler} type="text"/>
             </SearchInputWrapper>
             <SearchButton onClick={onClickHandler}>
