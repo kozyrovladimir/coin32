@@ -1,5 +1,5 @@
-import styled from "styled-components";
-import {BiChevronRight, BiChevronLeft, BiChevronsRight, BiChevronsLeft} from "react-icons/bi";
+import styled from "styled-components"
+import {BiChevronRight, BiChevronLeft, BiChevronsRight, BiChevronsLeft} from "react-icons/bi"
 
 const PaginationButtonsWrapper = styled.div`
   padding-top: 20px;

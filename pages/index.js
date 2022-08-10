@@ -1,14 +1,14 @@
-import {gamesAPI} from "../services/api";
-import {useState} from "react";
-import GameCard from "../components/GameCard";
-import styled from "styled-components";
-import Pagination from "../components/Pagination";
-import SearchBar from "../components/SearchBar";
-import {useQueryParam, StringParam, withDefault, NumberParam} from 'next-query-params';
-import {platformsData, sortData} from "../constants/filtrsData";
-import MenuList from "../components/MenuList";
-import {createParamsObj} from "../utils/createParams";
-import LoaderOfPage from "../components/LoaderOfPage";
+import {gamesAPI} from "../services/api"
+import {useState} from "react"
+import GameCard from "../components/GameCard"
+import styled from "styled-components"
+import Pagination from "../components/Pagination"
+import SearchBar from "../components/SearchBar"
+import {useQueryParam, StringParam, withDefault, NumberParam} from 'next-query-params'
+import {platformsData, sortData} from "../constants/filtrsData"
+import MenuList from "../components/MenuList"
+import {createParamsObj} from "../utils/createParams"
+import LoaderOfPage from "../components/LoaderOfPage"
 
 const GridWrapper = styled.div`
   min-height: 76vh;

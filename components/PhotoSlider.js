@@ -1,6 +1,6 @@
-import styled from 'styled-components';
-import {useState} from "react";
-import {BiChevronRight, BiChevronLeft} from "react-icons/bi";
+import styled from 'styled-components'
+import {useState} from "react"
+import {BiChevronRight, BiChevronLeft} from "react-icons/bi"
 
 const PhotoSliderWrapper = styled.div`
   width: 100%;

@@ -1,7 +1,7 @@
-import React from 'react';
-import styled from "styled-components";
-import Link from "next/link";
-import GameRating from "./GameRating";
+import React from 'react'
+import styled from "styled-components"
+import Link from "next/link"
+import GameRating from "./GameRating"
 
 const GameCardWrapper = styled.div`
   overflow: hidden;

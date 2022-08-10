@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import {useState} from 'react';
+import {useState} from 'react'
 
 const MenuWrapper = styled.div`
   margin-right: 20px;
