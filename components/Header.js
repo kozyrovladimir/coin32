@@ -17,7 +17,7 @@ const Header = () => {
     return (
         <HeaderWrapper>
             <LogoWrapper>
-                <span>COIN32</span>
+                <span>Games Library</span>
             </LogoWrapper>
         </HeaderWrapper>
     );
