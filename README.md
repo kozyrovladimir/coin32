@@ -1,4 +1,4 @@
-# Coin32
+# Game library
 Приложение-витрина игр. Демо: [Coin32](https://coin32-phi.vercel.app/)
 
 ![Screenshot](screenshot_1.png "Screenshot")
