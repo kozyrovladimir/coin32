@@ -17,7 +17,7 @@ const Header = () => {
     return (
         <HeaderWrapper>
             <LogoWrapper>
-                <span>Games Library</span>
+                <span>Game Library</span>
             </LogoWrapper>
         </HeaderWrapper>
     );
