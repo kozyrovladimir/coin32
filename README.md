@@ -1,5 +1,5 @@
 # Game library
-Приложение-витрина игр. Демо: [Coin32](https://coin32-phi.vercel.app/)
+Приложение-витрина игр. Демо: [тут](https://coin32-phi.vercel.app/)
 
 ![Screenshot](screen_2.jpeg "Screenshot")
 
